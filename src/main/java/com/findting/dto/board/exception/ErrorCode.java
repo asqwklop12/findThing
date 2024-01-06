@@ -17,8 +17,4 @@ public class ErrorCode {
     public void addValidation(String filed, String validation) {
         this.validation.put(filed, validation);
     }
-
-    public Map<String, String> getValidation() {
-        return validation;
-    }
 }
