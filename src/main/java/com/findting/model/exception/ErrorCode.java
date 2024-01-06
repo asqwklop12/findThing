@@ -1,4 +1,4 @@
-package com.findting.dto.board.exception;
+package com.findting.model.exception;
 
 import lombok.Getter;
 
