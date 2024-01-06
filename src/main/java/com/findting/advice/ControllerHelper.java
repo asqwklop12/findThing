@@ -1,6 +1,6 @@
 package com.findting.advice;
 
-import com.findting.dto.board.exception.ErrorCode;
+import com.findting.model.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
