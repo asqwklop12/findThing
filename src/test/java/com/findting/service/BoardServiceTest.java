@@ -1,6 +1,5 @@
 package com.findting.service;
 
-import com.findting.FindTingApplication;
 import com.findting.dto.board.CreateBoard;
 import com.findting.mapper.BoardRepository;
 import com.findting.model.Board;
