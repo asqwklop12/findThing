@@ -1,6 +1,7 @@
 package com.findting.advice;
 
 import com.findting.model.exception.ErrorCode;
+import com.findting.exception.notFound.NotFondException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -22,10 +23,18 @@ public class ControllerHelper {
         if (exception.hasErrors()) {
             List<FieldError> fieldErrors = exception.getFieldErrors();
             for (FieldError fieldError : fieldErrors) {
-                error.addValidation(fieldError.getField(),fieldError.getDefaultMessage());
+                error.addValidation(fieldError.getField(), fieldError.getDefaultMessage());
             }
         }
 
         return error;
     }
+
+    @ExceptionHandler({NotFondException.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorCode validation(NotFondException exception) {
+        return new ErrorCode(String.valueOf(HttpStatus.NOT_FOUND.value()), exception.getMessage());
+    }
+
+
 }
