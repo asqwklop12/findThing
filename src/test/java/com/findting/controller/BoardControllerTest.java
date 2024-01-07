@@ -4,16 +4,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.findting.dto.board.CreateBoard;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest
+@SpringBootTest
+@AutoConfigureMockMvc
 class BoardControllerTest {
 
     @Autowired
@@ -43,5 +47,14 @@ class BoardControllerTest {
                 .andExpect(jsonPath("$.message").value("잘못된 코드입니다."))
                 .andExpect(jsonPath("$.validation.title").value("제목은 공백일 수 없습니다."))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void listReadTest() throws Exception {
+        String json = objectMapper.writeValueAsString(new CreateBoard(null, "content"));
+        mockMvc.perform(get("/board")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 }

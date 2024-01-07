@@ -1,7 +1,9 @@
 package com.findting.controller;
 
+import com.findting.dto.board.BoardCondition;
 import com.findting.dto.board.CreateBoard;
 import com.findting.dto.board.ReadBoard;
+import com.findting.dto.board.ReadBoardList;
 import com.findting.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -16,6 +18,11 @@ public class BoardController {
     @PostMapping()
     public void create(@RequestBody @Validated CreateBoard createBoard) {
         boardService.write(createBoard);
+    }
+
+    @GetMapping()
+    public ReadBoardList list(BoardCondition condition) {
+        return boardService.listRead(condition);
     }
 
     @GetMapping("/{idx}")
