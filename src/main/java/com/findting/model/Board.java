@@ -1,6 +1,5 @@
 package com.findting.model;
 
-import com.findting.dto.board.CreateBoard;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

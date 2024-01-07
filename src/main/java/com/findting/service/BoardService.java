@@ -18,6 +18,6 @@ public class BoardService {
     @Transactional
     public void write(CreateBoard createBoard) {
         Board board = objectMapper.convertValue(createBoard, Board.class);
-        Board save = boardRepository.save(board);
+        boardRepository.save(board);
     }
 }
