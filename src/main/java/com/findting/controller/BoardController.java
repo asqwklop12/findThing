@@ -3,7 +3,6 @@ package com.findting.controller;
 import com.findting.dto.board.CreateBoard;
 import com.findting.dto.board.ReadBoard;
 import com.findting.service.BoardService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
