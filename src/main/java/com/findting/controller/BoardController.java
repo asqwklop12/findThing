@@ -24,9 +24,9 @@ public class BoardController {
         return boardService.listRead(condition);
     }
 
-    @GetMapping("/{idx}")
-    public ReadBoard read(@PathVariable Long idx) {
-        return boardService.read(idx);
+    @GetMapping("/{id}")
+    public ReadBoard read(@PathVariable Long id) {
+        return boardService.read(id);
     }
 
     @PutMapping("/{id}")
