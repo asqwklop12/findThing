@@ -3,14 +3,13 @@ package com.findting.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.findting.dto.board.*;
+import com.findting.exception.notFound.BoardNotFoundException;
 import com.findting.mapper.BoardRepository;
 import com.findting.model.Board;
-import com.findting.exception.notFound.BoardNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 @Service
@@ -37,5 +36,11 @@ public class BoardService {
         List<BoardList> boardList = objectMapper.convertValue(boards, new TypeReference<>() {
         });
         return new ReadBoardList(boardList, condition, boards.size());
+    }
+
+    public void edit(CreateBoard updateBoard, Long id) {
+        Board board = objectMapper.convertValue(updateBoard, Board.class);
+        board.addId(id);
+        boardRepository.save(board);
     }
 }

@@ -21,4 +21,7 @@ public class Board {
     @Lob
     private String content;
 
+    public void addId(Long id) {
+        this.id = id;
+    }
 }
