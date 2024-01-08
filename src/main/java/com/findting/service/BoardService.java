@@ -43,4 +43,9 @@ public class BoardService {
         board.addId(id);
         boardRepository.save(board);
     }
+
+    public void remove(Long id) {
+        Board board = objectMapper.convertValue(boardRepository.findById(id), Board.class);
+        boardRepository.delete(board);
+    }
 }
