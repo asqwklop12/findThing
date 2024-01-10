@@ -20,8 +20,17 @@ public class BoardController {
 
     // 보류
     @GetMapping()
-    public ReadBoardList list(BoardCondition condition) {
-        return boardService.listRead(condition);
+    public ReadBoardList list(@RequestParam(required = false) String title,
+                              @RequestParam(required = false) String content,
+                              @RequestParam(required = false, defaultValue = "1") Integer page,
+                              @RequestParam(required = false, defaultValue = "1") Integer perPage) {
+        return boardService.listRead(BoardCondition
+                .builder()
+                .title(title)
+                .content(content)
+                .page(page)
+                .current(perPage)
+                .build());
     }
 
     @GetMapping("/{id}")

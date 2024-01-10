@@ -7,10 +7,14 @@ import com.findting.exception.notFound.BoardNotFoundException;
 import com.findting.mapper.BoardRepository;
 import com.findting.model.Board;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,10 +36,11 @@ public class BoardService {
     }
 
     public ReadBoardList listRead(BoardCondition condition) {
-        List<Board> boards = boardRepository.findAll();
-        List<BoardList> boardList = objectMapper.convertValue(boards, new TypeReference<>() {
-        });
-        return new ReadBoardList(boardList, condition, boards.size());
+        List<Board> findAll = boardRepository.findAll();
+        PageRequest pageRequest = PageRequest.of(condition.getPage() - 1, condition.getCurrent());
+        Page<Board> boards = boardRepository.findAll(pageRequest);
+        List<BoardList> boardList = boards.stream().map(BoardList::new).collect(Collectors.toList());
+        return new ReadBoardList(boardList, condition, findAll.size());
     }
 
     public void edit(CreateBoard updateBoard, Long id) {
