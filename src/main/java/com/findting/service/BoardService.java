@@ -1,6 +1,5 @@
 package com.findting.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.findting.dto.board.*;
 import com.findting.exception.notFound.BoardNotFoundException;
@@ -9,7 +8,6 @@ import com.findting.model.Board;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
