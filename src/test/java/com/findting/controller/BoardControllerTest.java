@@ -91,7 +91,7 @@ class BoardControllerTest {
 
     @Test
     public void listReadTest() throws Exception {
-        String json = objectMapper.writeValueAsString(new CreateBoard(null, "content", "서울시"));
+        objectMapper.writeValueAsString(new CreateBoard(null, "content", "서울시"));
         mockMvc.perform(get("/board")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
