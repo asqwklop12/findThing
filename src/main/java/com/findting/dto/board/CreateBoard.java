@@ -1,9 +1,6 @@
 package com.findting.dto.board;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 
 @Getter
@@ -18,8 +15,14 @@ public class CreateBoard {
     @NotNull(message = "내용은 공백일 수 없습니다.")
     private final String content;
 
-    public CreateBoard(String title, String content) {
+    @NotBlank(message = "주소는 공백일 수 없습니다.")
+    @NotEmpty(message = "주소는 공백일 수 없습니다.")
+    @NotNull(message = "주소는 공백일 수 없습니다.")
+    private final String address;
+
+    public CreateBoard(String title, String content, String address) {
         this.title = title;
         this.content = content;
+        this.address = address;
     }
 }

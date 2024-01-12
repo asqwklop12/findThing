@@ -5,7 +5,6 @@ import com.findting.dto.board.CreateBoard;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,7 +27,7 @@ class BoardControllerTest {
 
     @Test
     public void defaultTest() throws Exception {
-        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content"));
+        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", "서울시"));
         mockMvc.perform(post("/board")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -38,7 +37,7 @@ class BoardControllerTest {
 
     @Test
     public void blankTest() throws Exception {
-        String json = objectMapper.writeValueAsString(new CreateBoard(null, "content"));
+        String json = objectMapper.writeValueAsString(new CreateBoard(null, "content", "서울시"));
         mockMvc.perform(post("/board")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -50,8 +49,49 @@ class BoardControllerTest {
     }
 
     @Test
+    public void addressNullTest() throws Exception {
+        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", null));
+        mockMvc.perform(post("/board")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andDo(print())
+                .andExpect(jsonPath("$.code").value("400"))
+                .andExpect(jsonPath("$.message").value("잘못된 코드입니다."))
+                .andExpect(jsonPath("$.validation.address").value("주소는 공백일 수 없습니다."))
+                .andExpect(status().isBadRequest());
+    }
+    @Test
+    public void addressBlankTest() throws Exception {
+        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", ""));
+        mockMvc.perform(post("/board")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andDo(print())
+                .andExpect(jsonPath("$.code").value("400"))
+                .andExpect(jsonPath("$.message").value("잘못된 코드입니다."))
+                .andExpect(jsonPath("$.validation.address").value("주소는 공백일 수 없습니다."))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void addressOneWordTest() throws Exception {
+        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", "1"));
+        mockMvc.perform(post("/board")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andDo(print())
+                .andExpect(jsonPath("$.code").value("400"))
+                .andExpect(jsonPath("$.message").value("잘못된 코드입니다."))
+                .andExpect(jsonPath("$.validation.address").value("주소는 1자리를 넘어야 합니다."))
+                .andExpect(status().isBadRequest());
+    }
+
+
+
+
+    @Test
     public void listReadTest() throws Exception {
-        String json = objectMapper.writeValueAsString(new CreateBoard(null, "content"));
+        String json = objectMapper.writeValueAsString(new CreateBoard(null, "content", "서울시"));
         mockMvc.perform(get("/board")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())

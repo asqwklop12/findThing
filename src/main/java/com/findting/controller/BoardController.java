@@ -23,7 +23,7 @@ public class BoardController {
     public ReadBoardList list(@RequestParam(required = false) String title,
                               @RequestParam(required = false) String content,
                               @RequestParam(required = false, defaultValue = "1") Integer page,
-                              @RequestParam(required = false, defaultValue = "1") Integer perPage) {
+                              @RequestParam(required = false) Integer perPage) {
         return boardService.listRead(BoardCondition
                 .builder()
                 .title(title)
