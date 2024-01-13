@@ -1,6 +1,7 @@
 package com.findting.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,10 +24,12 @@ public class Board {
     @Lob
     private String content;
 
+    @NotNull
     private String address;
 
     @CreatedDate
     private LocalDate createdDate;
+
     public void addId(Long id) {
         this.id = id;
     }

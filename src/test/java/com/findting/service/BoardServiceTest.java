@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @SpringBootTest
 class BoardServiceTest {
@@ -115,6 +116,6 @@ class BoardServiceTest {
         boardService.edit(updateBoard, board.getId());
 
         Board findBoard = repository.findById(board.getId()).orElse(null);
-        Assertions.assertEquals(findBoard.getAddress(), "서울시");
+        Assertions.assertEquals(Objects.requireNonNull(findBoard).getAddress(), "서울시");
     }
 }
