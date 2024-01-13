@@ -1,7 +1,5 @@
 package com.findting.dto.board;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.findting.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,6 +8,7 @@ import lombok.Getter;
 public class ReadBoard {
     private Long id;
     private String title;
+    private String address;
     private String content;
     private ReadProduct product;
 
