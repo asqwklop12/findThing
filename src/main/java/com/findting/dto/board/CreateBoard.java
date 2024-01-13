@@ -21,6 +21,8 @@ public class CreateBoard {
     private final String address;
 
     // 어떤 물건을 찾을지
+    @NotEmpty(message = "빈칸으로 둘 수 없습니다.")
+    @NotNull(message = "빈칸으로 둘 수 없습니다.")
     private final FindProductInfo product;
 
     public CreateBoard(String title, String content, String address, @NotNull FindProductInfo findProductInfo) {
