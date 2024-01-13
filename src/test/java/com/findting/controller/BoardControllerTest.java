@@ -2,6 +2,7 @@ package com.findting.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.findting.dto.board.CreateBoard;
+import com.findting.dto.board.FindProductInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -27,7 +28,8 @@ class BoardControllerTest {
 
     @Test
     public void defaultTest() throws Exception {
-        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", "서울시"));
+        FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
+        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", "서울시", findProductInfo));
         mockMvc.perform(post("/board")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -37,7 +39,8 @@ class BoardControllerTest {
 
     @Test
     public void blankTest() throws Exception {
-        String json = objectMapper.writeValueAsString(new CreateBoard(null, "content", "서울시"));
+        FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
+        String json = objectMapper.writeValueAsString(new CreateBoard(null, "content", "서울시", findProductInfo));
         mockMvc.perform(post("/board")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -50,7 +53,8 @@ class BoardControllerTest {
 
     @Test
     public void addressNullTest() throws Exception {
-        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", null));
+        FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
+        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", null, findProductInfo));
         mockMvc.perform(post("/board")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -60,9 +64,11 @@ class BoardControllerTest {
                 .andExpect(jsonPath("$.validation.address").value("주소는 공백일 수 없습니다."))
                 .andExpect(status().isBadRequest());
     }
+
     @Test
     public void addressBlankTest() throws Exception {
-        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", ""));
+        FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
+        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", "", findProductInfo));
         mockMvc.perform(post("/board")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -75,7 +81,8 @@ class BoardControllerTest {
 
     @Test
     public void addressOneWordTest() throws Exception {
-        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", "1"));
+        FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
+        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", "1", findProductInfo));
         mockMvc.perform(post("/board")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -87,11 +94,10 @@ class BoardControllerTest {
     }
 
 
-
-
     @Test
     public void listReadTest() throws Exception {
-        objectMapper.writeValueAsString(new CreateBoard(null, "content", "서울시"));
+        FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
+        objectMapper.writeValueAsString(new CreateBoard(null, "content", "서울시", findProductInfo));
         mockMvc.perform(get("/board")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())

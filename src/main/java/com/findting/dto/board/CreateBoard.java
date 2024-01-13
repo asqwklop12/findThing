@@ -4,7 +4,7 @@ import jakarta.validation.constraints.*;
 import lombok.Getter;
 
 @Getter
-public class CreateBoard {
+public class  CreateBoard {
     @NotBlank(message = "제목은 공백일 수 없습니다.")
     @NotEmpty(message = "제목은 공백일 수 없습니다.")
     @NotNull(message = "제목은 공백일 수 없습니다.")
@@ -20,9 +20,13 @@ public class CreateBoard {
     @NotNull(message = "주소는 공백일 수 없습니다.")
     private final String address;
 
-    public CreateBoard(String title, String content, String address) {
+    // 어떤 물건을 찾을지
+    private final FindProductInfo product;
+
+    public CreateBoard(String title, String content, String address, FindProductInfo findProductInfo) {
         this.title = title;
         this.content = content;
         this.address = address;
+        this.product = findProductInfo;
     }
 }

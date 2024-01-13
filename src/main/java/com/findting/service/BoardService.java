@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.findting.dto.board.*;
 import com.findting.exception.notFound.BoardNotFoundException;
 import com.findting.mapper.BoardRepository;
+import com.findting.mapper.ProductRepository;
 import com.findting.model.Board;
+import com.findting.model.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,12 +21,18 @@ import java.util.stream.Collectors;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final ProductRepository productRepository;
     private final ObjectMapper objectMapper;
 
     @Transactional
     public void write(CreateBoard createBoard) {
         Board board = objectMapper.convertValue(createBoard, Board.class);
         boardRepository.save(board);
+        FindProductInfo findProductInfo = createBoard.getProduct() ;
+        Product product = objectMapper.convertValue(findProductInfo, Product.class);
+        product.addBoardId(board.getId());
+        productRepository.save(product);
+
     }
 
     public ReadBoard read(Long id) {

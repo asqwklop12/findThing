@@ -1,6 +1,7 @@
 package com.findting.service;
 
 import com.findting.dto.board.CreateBoard;
+import com.findting.dto.board.FindProductInfo;
 import com.findting.dto.board.ReadBoard;
 import com.findting.exception.notFound.NotFondException;
 import com.findting.mapper.BoardRepository;
@@ -23,7 +24,8 @@ class BoardServiceTest {
 
     @Test
     public void create() {
-        boardService.write(new CreateBoard("title", "content", "서울시"));
+        FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
+        boardService.write(new CreateBoard("title", "content", "서울시", findProductInfo));
 
         List<Board> boards = repository.findAll();
 
@@ -36,7 +38,8 @@ class BoardServiceTest {
 
     @Test
     public void readOne() {
-        boardService.write(new CreateBoard("title", "content", "서울시"));
+        FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
+        boardService.write(new CreateBoard("title", "content", "서울시", findProductInfo));
 
         List<Board> boards = repository.findAll();
 
@@ -52,7 +55,8 @@ class BoardServiceTest {
 
     @Test
     public void readOneValidation() {
-        boardService.write(new CreateBoard("title", "content", "서울시"));
+        FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
+        boardService.write(new CreateBoard("title", "content", "서울시", findProductInfo));
 
         List<Board> boards = repository.findAll();
         // 첫번째꺼 가져온다.
@@ -65,7 +69,8 @@ class BoardServiceTest {
 
     @Test
     public void createTimeTest() {
-        boardService.write(new CreateBoard("title", "content", "서울시"));
+        FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
+        boardService.write(new CreateBoard("title", "content", "서울시", findProductInfo));
 
         List<Board> boards = repository.findAll();
         // 첫번째꺼 가져온다.
