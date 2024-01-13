@@ -55,9 +55,11 @@ public class BoardService {
         return new ReadBoardList(boardList, condition, findAll.size());
     }
 
-    public void edit(CreateBoard updateBoard, Long id) {
+    public void edit(UpdateBoard updateBoard, Long id) {
         Board board = objectMapper.convertValue(updateBoard, Board.class);
+        Board findBoard = boardRepository.findById(id).orElseThrow(BoardNotFoundException::new);
         board.addId(id);
+        board.originAddress(findBoard.getAddress());
         boardRepository.save(board);
     }
 

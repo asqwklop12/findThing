@@ -3,6 +3,7 @@ package com.findting.service;
 import com.findting.dto.board.CreateBoard;
 import com.findting.dto.board.FindProductInfo;
 import com.findting.dto.board.ReadBoard;
+import com.findting.dto.board.UpdateBoard;
 import com.findting.exception.notFound.NotFondException;
 import com.findting.mapper.BoardRepository;
 import com.findting.mapper.ProductRepository;
@@ -98,5 +99,22 @@ class BoardServiceTest {
         Board board = boards.get(0);
 
         Assertions.assertEquals(board.getCreatedDate(), LocalDate.now());
+    }
+
+    @Test
+    public void updateAddressCheck() {
+        FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
+        boardService.write(new CreateBoard("title", "content", "서울시", findProductInfo));
+
+        List<Board> boards = repository.findAll();
+        // 첫번째꺼 가져온다.
+        Board board = boards.get(0);
+
+        UpdateBoard updateBoard = new UpdateBoard("물건1", "물건2");
+
+        boardService.edit(updateBoard, board.getId());
+
+        Board findBoard = repository.findById(board.getId()).orElse(null);
+        Assertions.assertEquals(findBoard.getAddress(), "서울시");
     }
 }

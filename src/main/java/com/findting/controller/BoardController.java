@@ -39,8 +39,8 @@ public class BoardController {
     }
 
     @PutMapping("/{id}")
-    public void update(@RequestBody @Validated CreateBoard createBoard, @PathVariable Long id) {
-        boardService.edit(createBoard, id);
+    public void update(@RequestBody @Validated UpdateBoard updateBoard, @PathVariable Long id) {
+        boardService.edit(updateBoard, id);
     }
 
     @DeleteMapping("/{id}")

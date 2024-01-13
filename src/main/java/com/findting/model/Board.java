@@ -31,6 +31,10 @@ public class Board {
         this.id = id;
     }
 
+    public void originAddress(String address) {
+        this.address = address;
+    }
+
 //    public void readProduct(Product product) {
 //        this.product = product;
 //    }

@@ -3,6 +3,9 @@ package com.findting.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.findting.dto.board.CreateBoard;
 import com.findting.dto.board.FindProductInfo;
+import com.findting.dto.board.UpdateBoard;
+import com.findting.mapper.BoardRepository;
+import com.findting.model.Board;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -10,8 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import java.util.List;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -22,6 +26,9 @@ class BoardControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private BoardRepository repository;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -102,5 +109,29 @@ class BoardControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void editTest() throws Exception {
+        FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
+        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", "서울시", findProductInfo));
+        mockMvc.perform(post("/board")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        List<Board> boards = repository.findAll();
+        Board board = boards.get(0);
+
+        String editJson = objectMapper.writeValueAsString(new UpdateBoard("title2", "content2"));
+        mockMvc.perform(put("/board")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(editJson)
+                        .pathInfo(board.getId().toString()))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+
     }
 }
