@@ -28,7 +28,7 @@ public class BoardService {
     public void write(CreateBoard createBoard) {
         Board board = objectMapper.convertValue(createBoard, Board.class);
         boardRepository.save(board);
-        FindProductInfo findProductInfo = createBoard.getProduct() ;
+        FindProductInfo findProductInfo = createBoard.getProduct();
         Product product = objectMapper.convertValue(findProductInfo, Product.class);
         product.addBoardId(board.getId());
         productRepository.save(product);
@@ -39,7 +39,12 @@ public class BoardService {
         Board board = boardRepository.findById(id)
                 .orElseThrow(BoardNotFoundException::new);
 
-        return objectMapper.convertValue(board, ReadBoard.class);
+        Product product = productRepository.findByBoardId(id).orElse(null);
+
+        ReadBoard readBoard = objectMapper.convertValue(board, ReadBoard.class);
+        ReadProduct readProduct = objectMapper.convertValue(product, ReadProduct.class);
+        readBoard.addProduct(readProduct);
+        return readBoard;
     }
 
     public ReadBoardList listRead(BoardCondition condition) {
