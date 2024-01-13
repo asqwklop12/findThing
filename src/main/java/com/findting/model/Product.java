@@ -9,7 +9,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String productId;
+    private String Id;
     private String kind;
 
     private Long boardId;

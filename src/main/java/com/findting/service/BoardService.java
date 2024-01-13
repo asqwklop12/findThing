@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -66,5 +67,8 @@ public class BoardService {
     public void remove(Long id) {
         Board board = objectMapper.convertValue(boardRepository.findById(id), Board.class);
         boardRepository.delete(board);
+        // 상품을 조회한다.
+        Product product = productRepository.findByBoardId(id).orElse(null);
+        productRepository.delete(Objects.requireNonNull(product));
     }
 }

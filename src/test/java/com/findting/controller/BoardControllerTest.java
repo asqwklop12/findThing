@@ -125,7 +125,7 @@ class BoardControllerTest {
         Board board = boards.get(0);
 
         String editJson = objectMapper.writeValueAsString(new UpdateBoard("title2", "content2"));
-        mockMvc.perform(put("/board")
+        mockMvc.perform(patch("/board")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(editJson)
                         .pathInfo(board.getId().toString()))
