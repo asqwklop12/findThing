@@ -38,7 +38,7 @@ public class BoardController {
         return boardService.read(id);
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public void update(@RequestBody @Validated UpdateBoard updateBoard, @PathVariable Long id) {
         boardService.edit(updateBoard, id);
     }
