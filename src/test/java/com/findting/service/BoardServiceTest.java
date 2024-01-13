@@ -5,7 +5,9 @@ import com.findting.dto.board.FindProductInfo;
 import com.findting.dto.board.ReadBoard;
 import com.findting.exception.notFound.NotFondException;
 import com.findting.mapper.BoardRepository;
+import com.findting.mapper.ProductRepository;
 import com.findting.model.Board;
+import com.findting.model.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ class BoardServiceTest {
     @Autowired
     private BoardRepository repository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     @Test
     public void create() {
         FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
@@ -33,6 +38,22 @@ class BoardServiceTest {
         Board board = boards.get(0);
 
         Assertions.assertEquals(board.getTitle(), "title");
+
+    }
+
+    @Test
+    public void createByProduct() {
+        FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
+        boardService.write(new CreateBoard("title", "content", "서울시", findProductInfo));
+
+        List<Board> boards = repository.findAll();
+
+        // 첫번째꺼 가져온다.
+        Board board = boards.get(0);
+
+        List<Product> productList = productRepository.findAll();
+        Product product = productList.get(0);
+        Assertions.assertEquals(board.getId(), product.getBoardId());
 
     }
 

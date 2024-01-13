@@ -17,8 +17,6 @@ public class Product {
     @Lob
     private String detail;
 
-    private int count;
-
     public void addBoardId(Long boardId) {
         this.boardId = boardId;
     }

@@ -30,4 +30,8 @@ public class Board {
     public void addId(Long id) {
         this.id = id;
     }
+
+//    public void readProduct(Product product) {
+//        this.product = product;
+//    }
 }

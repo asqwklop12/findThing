@@ -38,6 +38,7 @@ public class BoardService {
     public ReadBoard read(Long id) {
         Board board = boardRepository.findById(id)
                 .orElseThrow(BoardNotFoundException::new);
+
         return objectMapper.convertValue(board, ReadBoard.class);
     }
 
