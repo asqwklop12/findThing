@@ -18,7 +18,7 @@ public class BoardController {
         boardService.write(createBoard);
     }
 
-    // 보류
+
     @GetMapping()
     public ReadBoardList list(@RequestParam(required = false) String title,
                               @RequestParam(required = false) String content,
