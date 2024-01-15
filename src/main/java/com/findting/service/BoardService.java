@@ -4,15 +4,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.findting.dto.board.*;
 import com.findting.exception.notFound.BoardNotFoundException;
 import com.findting.mapper.BoardRepository;
+import com.findting.mapper.FileRepository;
 import com.findting.mapper.ProductRepository;
 import com.findting.model.Board;
 import com.findting.model.Product;
+import com.findting.model.UploadFile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -23,7 +28,9 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final ProductRepository productRepository;
+    private final FileRepository fileRepository;
     private final ObjectMapper objectMapper;
+    private final static String UPLOAD_URL = "/Users/yonghun/upload";
 
     @Transactional
     public void write(CreateBoard createBoard) {
@@ -70,5 +77,12 @@ public class BoardService {
         // 상품을 조회한다.
         Product product = productRepository.findByBoardId(id).orElse(null);
         productRepository.delete(Objects.requireNonNull(product));
+    }
+
+    public void upload(MultipartFile file) throws IOException {
+        UploadFile uploadFile = new UploadFile(file);
+        fileRepository.save(uploadFile);
+        String id = uploadFile.getId();
+        file.transferTo(new File(UPLOAD_URL + "/" + id + file.getOriginalFilename()));
     }
 }

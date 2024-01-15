@@ -5,6 +5,9 @@ import com.findting.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/board")
@@ -12,6 +15,11 @@ import org.springframework.web.bind.annotation.*;
 public class BoardController {
 
     private final BoardService boardService;
+
+    @PostMapping("/upload")
+    public void upload(@RequestParam("file") MultipartFile file) throws IOException {
+        boardService.upload(file);
+    }
 
     @PostMapping()
     public void create(@RequestBody @Validated CreateBoard createBoard) {
