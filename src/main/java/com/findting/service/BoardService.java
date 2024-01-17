@@ -88,6 +88,7 @@ public class BoardService {
 
     public String upload(MultipartFile file) throws IOException {
         UploadFile uploadFile = new UploadFile(file);
+        uploadFile.addUrl("http://localhost:8080", UPLOAD_URL);
         fileRepository.save(uploadFile);
         String id = uploadFile.getId();
         file.transferTo(new File(UPLOAD_URL + "/" + id + file.getOriginalFilename()));

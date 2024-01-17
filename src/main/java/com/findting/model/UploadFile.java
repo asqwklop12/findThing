@@ -16,7 +16,7 @@ public class UploadFile {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
-
+    private String url;
     private String extension;
 
     public UploadFile(MultipartFile file) {
@@ -30,5 +30,9 @@ public class UploadFile {
         }
         int index = originalFilename.lastIndexOf(".");
         return originalFilename.substring(index + 1);
+    }
+
+    public void addUrl(String prefix, String url) {
+        this.url = prefix + url;
     }
 }
