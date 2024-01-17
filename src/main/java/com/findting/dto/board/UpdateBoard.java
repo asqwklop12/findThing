@@ -19,4 +19,9 @@ public class UpdateBoard {
     @NotEmpty(message = "내용은 공백일 수 없습니다.")
     @NotNull(message = "내용은 공백일 수 없습니다.")
     private String content;
+
+    @NotBlank(message = "파일은 필수 입니다.")
+    @NotEmpty(message = "파일은 필수 입니다.")
+    @NotNull(message = "파일은 필수 입니다.")
+    private String file;
 }

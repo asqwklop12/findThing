@@ -32,7 +32,7 @@ class BoardServiceTest {
     @Test
     public void create() {
         FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
-        boardService.write(new CreateBoard("title", "content", "서울시", findProductInfo));
+        boardService.write(new CreateBoard("title", "content", "서울시", "file1", findProductInfo));
 
         List<Board> boards = repository.findAll();
 
@@ -46,7 +46,7 @@ class BoardServiceTest {
     @Test
     public void createByProduct() {
         FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
-        boardService.write(new CreateBoard("title", "content", "서울시", findProductInfo));
+        boardService.write(new CreateBoard("title", "content", "서울시", "file1", findProductInfo));
 
         List<Board> boards = repository.findAll();
 
@@ -62,7 +62,7 @@ class BoardServiceTest {
     @Test
     public void readOne() {
         FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
-        boardService.write(new CreateBoard("title", "content", "서울시", findProductInfo));
+        boardService.write(new CreateBoard("title", "content", "서울시", "file1", findProductInfo));
 
         List<Board> boards = repository.findAll();
 
@@ -79,7 +79,7 @@ class BoardServiceTest {
     @Test
     public void readOneValidation() {
         FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
-        boardService.write(new CreateBoard("title", "content", "서울시", findProductInfo));
+        boardService.write(new CreateBoard("title", "content", "서울시", "file1", findProductInfo));
 
         List<Board> boards = repository.findAll();
         // 첫번째꺼 가져온다.
@@ -93,7 +93,7 @@ class BoardServiceTest {
     @Test
     public void createTimeTest() {
         FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
-        boardService.write(new CreateBoard("title", "content", "서울시", findProductInfo));
+        boardService.write(new CreateBoard("title", "content", "서울시", "file1", findProductInfo));
 
         List<Board> boards = repository.findAll();
         // 첫번째꺼 가져온다.
@@ -105,13 +105,13 @@ class BoardServiceTest {
     @Test
     public void updateAddressCheck() {
         FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
-        boardService.write(new CreateBoard("title", "content", "서울시", findProductInfo));
+        boardService.write(new CreateBoard("title", "content", "서울시", "file1", findProductInfo));
 
         List<Board> boards = repository.findAll();
         // 첫번째꺼 가져온다.
         Board board = boards.get(0);
 
-        UpdateBoard updateBoard = new UpdateBoard("물건1", "물건2");
+        UpdateBoard updateBoard = new UpdateBoard("물건1", "물건2","file2");
 
         boardService.edit(updateBoard, board.getId());
 

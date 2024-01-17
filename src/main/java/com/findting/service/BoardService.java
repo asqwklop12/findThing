@@ -3,6 +3,7 @@ package com.findting.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.findting.dto.board.*;
 import com.findting.exception.notFound.BoardNotFoundException;
+import com.findting.exception.notFound.FileNotFoundException;
 import com.findting.mapper.BoardRepository;
 import com.findting.mapper.FileRepository;
 import com.findting.mapper.ProductRepository;
@@ -49,7 +50,13 @@ public class BoardService {
 
         Product product = productRepository.findByBoardId(id).orElse(null);
 
+        // 파일 정보를 가져온다.
+        UploadFile fileInfo = fileRepository.findById(board.getFile()).orElseThrow(FileNotFoundException::new);
+
         ReadBoard readBoard = objectMapper.convertValue(board, ReadBoard.class);
+
+
+        readBoard.readFileInfo(objectMapper.convertValue(fileInfo, BoardFile.class));
         ReadProduct readProduct = objectMapper.convertValue(product, ReadProduct.class);
         readBoard.addProduct(readProduct);
         return readBoard;
@@ -79,10 +86,11 @@ public class BoardService {
         productRepository.delete(Objects.requireNonNull(product));
     }
 
-    public void upload(MultipartFile file) throws IOException {
+    public String upload(MultipartFile file) throws IOException {
         UploadFile uploadFile = new UploadFile(file);
         fileRepository.save(uploadFile);
         String id = uploadFile.getId();
         file.transferTo(new File(UPLOAD_URL + "/" + id + file.getOriginalFilename()));
+        return id;
     }
 }

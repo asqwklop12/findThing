@@ -27,6 +27,9 @@ public class Board {
     @NotNull
     private String address;
 
+    @NotNull
+    private String file;
+
     @CreatedDate
     private LocalDate createdDate;
 

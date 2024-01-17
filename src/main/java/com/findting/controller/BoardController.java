@@ -17,8 +17,8 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping("/upload")
-    public void upload(@RequestParam("file") MultipartFile file) throws IOException {
-        boardService.upload(file);
+    public String upload(@RequestParam("file") MultipartFile file) throws IOException {
+        return boardService.upload(file);
     }
 
     @PostMapping()

@@ -36,7 +36,7 @@ class BoardControllerTest {
     @Test
     public void defaultTest() throws Exception {
         FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
-        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", "서울시", findProductInfo));
+        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", "서울시", "file1",findProductInfo));
         mockMvc.perform(post("/board")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -47,7 +47,7 @@ class BoardControllerTest {
     @Test
     public void blankTest() throws Exception {
         FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
-        String json = objectMapper.writeValueAsString(new CreateBoard(null, "content", "서울시", findProductInfo));
+        String json = objectMapper.writeValueAsString(new CreateBoard(null, "content", "서울시", "file1", findProductInfo));
         mockMvc.perform(post("/board")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -61,7 +61,7 @@ class BoardControllerTest {
     @Test
     public void addressNullTest() throws Exception {
         FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
-        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", null, findProductInfo));
+        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", null, "file1", findProductInfo));
         mockMvc.perform(post("/board")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -75,7 +75,7 @@ class BoardControllerTest {
     @Test
     public void addressBlankTest() throws Exception {
         FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
-        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", "", findProductInfo));
+        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", "", "file1", findProductInfo));
         mockMvc.perform(post("/board")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -89,7 +89,7 @@ class BoardControllerTest {
     @Test
     public void addressOneWordTest() throws Exception {
         FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
-        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", "1", findProductInfo));
+        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", "1", "file1", findProductInfo));
         mockMvc.perform(post("/board")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -104,7 +104,7 @@ class BoardControllerTest {
     @Test
     public void listReadTest() throws Exception {
         FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
-        objectMapper.writeValueAsString(new CreateBoard(null, "content", "서울시", findProductInfo));
+        objectMapper.writeValueAsString(new CreateBoard(null, "content", "서울시", "file1", findProductInfo));
         mockMvc.perform(get("/board")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -114,7 +114,7 @@ class BoardControllerTest {
     @Test
     public void editTest() throws Exception {
         FindProductInfo findProductInfo = new FindProductInfo("물건", "곰");
-        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", "서울시", findProductInfo));
+        String json = objectMapper.writeValueAsString(new CreateBoard("title", "content", "서울시", "file1", findProductInfo));
         mockMvc.perform(post("/board")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -124,7 +124,7 @@ class BoardControllerTest {
         List<Board> boards = repository.findAll();
         Board board = boards.get(0);
 
-        String editJson = objectMapper.writeValueAsString(new UpdateBoard("title2", "content2"));
+        String editJson = objectMapper.writeValueAsString(new UpdateBoard("title2", "content2","file1"));
         mockMvc.perform(put("/board")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(editJson)
